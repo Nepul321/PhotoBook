@@ -30,6 +30,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+LOGIN_URL = 'accounts-login'
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'accounts-login'
 
 # Application definition
 
@@ -43,6 +46,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_filters',
     'base',
+    'accounts',
 ]
 
 MIDDLEWARE = [
