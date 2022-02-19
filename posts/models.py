@@ -1,10 +1,17 @@
 from django.db import models
 from base.models import User
 
-class PostManager(models.Manager):
-    def get_users_feed(self, *args, **kwargs):
+class PostQuerySet(models.QuerySet):
+    def feed(self):
         qs = self.filter(is_private=False)
         return qs
+
+class PostManager(models.Manager):
+    def get_queryset(self, *args, **kwargs):
+        return PostQuerySet(self.model, using=self._db)
+
+    def get_users_feed(self):
+        return self.get_queryset().feed()
 
 class Post(models.Model):
     image = models.ImageField(upload_to="posted_images/")
