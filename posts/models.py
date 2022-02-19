@@ -26,8 +26,3 @@ class Post(models.Model):
 
     class Meta:
         ordering = ['-datetime']
-
-    @property
-    def get_all_users(self):
-        posts = self.objects.filter(user__username="admin")
-        return posts
