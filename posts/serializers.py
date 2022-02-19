@@ -5,7 +5,7 @@ from .models import (
 
 from accounts.serializers import UserPublicSerializer
 
-class PostSerializer(serializers.Serializer):
+class PostSerializer(serializers.ModelSerializer):
     user = UserPublicSerializer(read_only=True)
     likes = serializers.SerializerMethodField(read_only=True)
     is_owner = serializers.SerializerMethodField(read_only=True)
