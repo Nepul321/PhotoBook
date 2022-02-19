@@ -4,6 +4,7 @@ from base.models import User
 class Post(models.Model):
     image = models.ImageField(upload_to="posted_images/")
     caption = models.TextField(blank=True)
+    is_private = models.BooleanField(default=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     date = models.DateField(auto_now_add=True)
     datetime = models.DateTimeField(auto_now_add=True)
