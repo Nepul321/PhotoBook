@@ -13,3 +13,11 @@ def PostListView(request, *args, **kwargs):
     serializer = PostSerializer(qs, many=True, context=context)
     data = serializer.data
     return Response(data, status=200)
+
+@api_view(['GET'])
+def UserPostsFeedView(request, *args, **kwargs):
+    context = {'request' : request}
+    qs = Post.objects.get_users_feed()
+    serializer = PostSerializer(qs, many=True, context=context)
+    data = serializer.data
+    return Response(data, status=200)
