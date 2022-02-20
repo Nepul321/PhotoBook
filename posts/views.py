@@ -23,6 +23,7 @@ def UserPostsFeedView(request, *args, **kwargs):
     return Response(data, status=200)
 
 @api_view(['POST'])
+@permission_classes([IsAuthenticated, IsAdminUser])
 def PostCreateView(request, *args, **kwargs):
     context = {'request' : request}
     serializer = PostSerializer(data=request.data, context=context)
