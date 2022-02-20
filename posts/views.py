@@ -21,3 +21,14 @@ def UserPostsFeedView(request, *args, **kwargs):
     serializer = PostSerializer(qs, many=True, context=context)
     data = serializer.data
     return Response(data, status=200)
+
+@api_view(['POST'])
+def PostCreateView(request, *args, **kwargs):
+    context = {'request' : request}
+    serializer = PostSerializer(data=request.data, context=context)
+    if serializer.is_valid(raise_exception=True):
+        serializer.save(user=request.user)
+        data = serializer.data
+        return Response(data, status=201)
+
+    return Response({}, status=401)
