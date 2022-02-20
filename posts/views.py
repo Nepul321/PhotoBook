@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
@@ -23,7 +22,7 @@ def UserPostsFeedView(request, *args, **kwargs):
     return Response(data, status=200)
 
 @api_view(['POST'])
-@permission_classes([IsAuthenticated, IsAdminUser])
+@permission_classes([IsAuthenticated])
 def PostCreateView(request, *args, **kwargs):
     context = {'request' : request}
     serializer = PostSerializer(data=request.data, context=context)
@@ -33,3 +32,22 @@ def PostCreateView(request, *args, **kwargs):
         return Response(data, status=201)
 
     return Response({}, status=401)
+
+@api_view(['GET'])
+def PostDetailView(request, id, *args, **kwargs):
+    context = {"request" : request}
+    qs = Post.objects.filter(id=id)
+    if not qs:
+        return Response({"detail" : "Object not found"}, status=404)
+    obj = qs.first()
+    if obj.is_private == True:
+        if obj.user == request.user:
+            serializer = PostSerializer(obj, context=context)
+            data = serializer.data
+            return Response(data, status=200)
+        return Response({"detail" : "You don't have access to this post"})
+    serializer = PostSerializer(obj, context=context)
+    data = serializer.data
+    return Response(data, status=200)
+
+    
