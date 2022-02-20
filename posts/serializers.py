@@ -5,6 +5,8 @@ from .models import (
 
 from accounts.serializers import UserPublicSerializer
 
+POST_VALIDATE = ['like', 'unlike']
+
 class PostSerializer(serializers.ModelSerializer):
     user = UserPublicSerializer(read_only=True)
     likes = serializers.SerializerMethodField(read_only=True)
@@ -23,3 +25,12 @@ class PostSerializer(serializers.ModelSerializer):
         if request.user == obj.user:
             is_owner = True
         return is_owner
+
+class PostActionSerializer(serializers.Serializer):
+    id = serializers.CharField()
+    action = serializers.CharField()
+    def validate_action(self, value):
+        value = value.lower().strip()
+        if value not in POST_VALIDATE:
+            raise serializers.ValidationError("This is not a valid action")
+        return value    
