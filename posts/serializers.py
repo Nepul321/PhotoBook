@@ -11,6 +11,7 @@ class PostSerializer(serializers.ModelSerializer):
     user = UserPublicSerializer(read_only=True)
     likes = serializers.SerializerMethodField(read_only=True)
     is_owner = serializers.SerializerMethodField(read_only=True)
+    # image = serializers.ImageField()
     class Meta:
         model = Post
         fields = ('image', 'caption', 'user', 'date', 'likes', 'is_owner', 'is_private')

@@ -5,7 +5,8 @@ from .views import (
     UserPostsFeedView,
     PostDetailView,
     PostLikeUnlikeView,
-    PostDeleteView
+    PostDeleteView,
+    PostUpdateView
 )
 
 urlpatterns = [
@@ -15,4 +16,5 @@ urlpatterns = [
     path('<int:id>/',  PostDetailView, name="post-details"),
     path('action/', PostLikeUnlikeView, name="post-like-unlike"),
     path('<int:id>/delete/', PostDeleteView, name="post-delete"),
+    path('<int:id>/update/', PostUpdateView, name="post-update"),
 ]

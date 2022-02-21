@@ -14,7 +14,7 @@ class PostManager(models.Manager):
         return self.get_queryset().feed()
 
 class Post(models.Model):
-    image = models.ImageField(upload_to="posted_images/")
+    image = models.ImageField(upload_to="posted_images/", blank=True, null=True)
     caption = models.TextField(blank=True)
     is_private = models.BooleanField(default=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE)

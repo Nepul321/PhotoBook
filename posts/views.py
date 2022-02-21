@@ -40,7 +40,15 @@ def UserPostsFeedView(request, *args, **kwargs):
 @permission_classes([IsAuthenticated])
 def PostCreateView(request, *args, **kwargs):
     context = {"request": request}
-    serializer = PostSerializer(data=request.data, context=context)
+    post_data = request.data
+    image = None
+    try:
+        image = post_data['image']
+    except:
+        pass
+    if not image:
+        return Response({"detail" : "No image"}, status=401)
+    serializer = PostSerializer(data=post_data, context=context)
     if serializer.is_valid(raise_exception=True):
         serializer.save(user=request.user)
         data = serializer.data
@@ -116,3 +124,20 @@ def PostDeleteView(request, id, *args, **kwargs):
 
     return Response({"detail" : "You can't delete this post"})
     
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def PostUpdateView(request, id, *args, **kwargs):
+    context = {"request" : request}
+    qs = Post.objects.filter(id=id)
+    if not qs:
+        return Response({"detail" : "Post not found"}, status=404)
+
+    obj = qs.first()
+    data = request.data
+    if obj.user == request.user:
+        serializer = PostSerializer(instance=obj, data=data, context=context)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return Response(serializer.data, status=200)
+
+    return Response({"detail" : "You can't update this post"}, status=403)
