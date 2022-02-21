@@ -54,14 +54,14 @@ def PostDetailView(request, id, *args, **kwargs):
     context = {"request": request}
     qs = Post.objects.filter(id=id)
     if not qs:
-        return Response({"detail": "Object not found"}, status=404)
+        return Response({"detail": "Post not found"}, status=404)
     obj = qs.first()
     if obj.is_private == True:
         if obj.user == request.user:
             serializer = PostSerializer(obj, context=context)
             data = serializer.data
             return Response(data, status=200)
-        return Response({"detail": "You don't have access to this post"})
+        return Response({"detail": "You don't have access to this post"}, status=403)
     serializer = PostSerializer(obj, context=context)
     data = serializer.data
     return Response(data, status=200)
@@ -78,7 +78,7 @@ def PostLikeUnlikeView(request, *args, **kwargs):
     action = data.get("action")
     qs = Post.objects.filter(id=id)
     if not qs:
-        return Response({"detail": "Object not found"}, status=404)
+        return Response({"detail": "Post not found"}, status=404)
     obj = qs.first()
     if obj.is_private == True:
         if obj.user == request.user:
@@ -100,3 +100,19 @@ def PostLikeUnlikeView(request, *args, **kwargs):
         obj.likes.remove(request.user)
         serializer = PostSerializer(obj, context=context)
         return Response(serializer.data, status=200)
+
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def PostDeleteView(request, id, *args, **kwargs):
+    context = {"request" : request}
+    qs = Post.objects.filter(id=id)
+    if not qs:
+        return Response({"detail" : "Post not found"}, status=404)
+
+    obj = qs.first()
+    if obj.user == request.user:
+        obj.delete()
+        return Response({"detail" : "Post deleted"}, status=200)
+
+    return Response({"detail" : "You can't delete this post"})
+    

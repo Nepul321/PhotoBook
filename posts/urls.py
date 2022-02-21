@@ -4,7 +4,8 @@ from .views import (
     PostListView,
     UserPostsFeedView,
     PostDetailView,
-    PostLikeUnlikeView
+    PostLikeUnlikeView,
+    PostDeleteView
 )
 
 urlpatterns = [
@@ -13,4 +14,5 @@ urlpatterns = [
     path('create/', PostCreateView , name="posts-create"),
     path('<int:id>/',  PostDetailView, name="post-details"),
     path('action/', PostLikeUnlikeView, name="post-like-unlike"),
+    path('<int:id>/delete/', PostDeleteView, name="post-delete"),
 ]
