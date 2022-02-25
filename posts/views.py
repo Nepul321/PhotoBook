@@ -37,7 +37,6 @@ def UserPostsFeedView(request, *args, **kwargs):
         if object.is_private == True:
             if object.user == user:
                 objects.append(object)
-            pass
         else:
             objects.append(object)
 
