@@ -1,17 +1,21 @@
 from django.db import models
 from base.models import User
+from django.db.models import Q
 
 class PostQuerySet(models.QuerySet):
-    def feed(self):
-        qs = self.filter(is_private=False)
-        return qs
+    def feed(self, user):
+        followed_users_id = user.following.values_list("user__id", flat=True)
+        return self.filter(
+            Q(user__id__in=followed_users_id) |
+            Q(user=user)
+        ).distinct()
 
 class PostManager(models.Manager):
     def get_queryset(self, *args, **kwargs):
         return PostQuerySet(self.model, using=self._db)
 
-    def get_users_feed(self):
-        return self.get_queryset().feed()
+    def get_users_feed(self, user):
+        return self.get_queryset().feed(user)
 
 class Post(models.Model):
     image = models.ImageField(upload_to="posted_images/", blank=True, null=True)

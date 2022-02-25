@@ -30,8 +30,18 @@ def PostListView(request, *args, **kwargs):
 @api_view(["GET"])
 def UserPostsFeedView(request, *args, **kwargs):
     context = {"request": request}
-    qs = Post.objects.get_users_feed()
-    serializer = PostSerializer(qs, many=True, context=context)
+    objects = []
+    user = request.user
+    qs = Post.objects.get_users_feed(user)
+    for object in qs:
+        if object.is_private == True:
+            if object.user == user:
+                objects.append(object)
+            pass
+        else:
+            objects.append(object)
+
+    serializer = PostSerializer(objects, many=True, context=context)
     data = serializer.data
     return Response(data, status=200)
 
