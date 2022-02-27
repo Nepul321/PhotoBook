@@ -12,6 +12,10 @@ from django.contrib.auth import (
     # update_session_auth_hash
 )
 
+from .forms import (
+    UserAccountForm
+)
+
 @unauthenticated_only
 def LoginView(request, *args, **kwargs):
     template = "auth/login.html"
@@ -30,3 +34,19 @@ def LoginView(request, *args, **kwargs):
 def LogoutView(request, *args, **kwargs):
     logout(request)
     return redirect('accounts-login')
+
+@login_required
+def AccountView(request, *args, **kwargs):
+    template = "auth/account.html"
+    user = request.user
+    form = UserAccountForm(instance=user)
+    if request.method == "POST":
+        form = UserAccountForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            return redirect('accounts-account')
+    context = {
+     'form' : form
+    }
+
+    return render(request, template, context)
