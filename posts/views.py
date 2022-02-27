@@ -17,6 +17,14 @@ from .serializers import (
 from .models import Post
 
 
+@api_view(['GET'])
+def PostGlobalView(request, *args, **kwargs):
+    context = {"request" : request}
+    qs = Post.objects.get_global_posts()
+    serializer = PostSerializer(qs, many=True, context=context)
+    data = serializer.data
+    return Response(data, status=200)
+
 @api_view(["GET"])
 @permission_classes([IsAuthenticated, IsAdminUser])
 def PostListView(request, *args, **kwargs):

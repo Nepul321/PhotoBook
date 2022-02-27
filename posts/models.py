@@ -10,12 +10,20 @@ class PostQuerySet(models.QuerySet):
             Q(user=user)
         ).distinct()
 
+    def globalposts(self):
+        return self.filter(
+            Q(is_private=False)
+        ).distinct()
+
 class PostManager(models.Manager):
     def get_queryset(self, *args, **kwargs):
         return PostQuerySet(self.model, using=self._db)
 
     def get_users_feed(self, user):
         return self.get_queryset().feed(user)
+
+    def get_global_posts(self):
+        return self.get_queryset().globalposts()
 
 class Post(models.Model):
     image = models.ImageField(upload_to="posted_images/", blank=True, null=True)
