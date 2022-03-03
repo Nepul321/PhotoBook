@@ -1,6 +1,6 @@
 function PostFeed() {
     return (
-        <h1>Feed</h1>
+        <h1>Global posts</h1>
     )
 }
 
