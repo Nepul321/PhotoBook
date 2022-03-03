@@ -4,17 +4,21 @@ from .decorators import (
     unauthenticated_only
 )
 
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import (
+    AuthenticationForm,
+    PasswordChangeForm
+)
 
 from django.contrib.auth import (
-    login, 
+    login,
     logout,
-    # update_session_auth_hash
+    update_session_auth_hash
 )
 
 from .forms import (
     UserAccountForm
 )
+
 
 @unauthenticated_only
 def LoginView(request, *args, **kwargs):
@@ -25,15 +29,17 @@ def LoginView(request, *args, **kwargs):
         login(request, user_)
         return redirect("/")
     context = {
-       "form" : form
+       "form": form
     }
 
     return render(request, template, context)
+
 
 @login_required
 def LogoutView(request, *args, **kwargs):
     logout(request)
     return redirect('accounts-login')
+
 
 @login_required
 def AccountView(request, *args, **kwargs):
@@ -46,7 +52,25 @@ def AccountView(request, *args, **kwargs):
             form.save()
             return redirect('accounts-account')
     context = {
-     'form' : form
+     'form': form
+    }
+
+    return render(request, template, context)
+
+
+@login_required
+def PasswordChangeView(request, *args, **kwargs):
+    template = "auth/password.html"
+    form = PasswordChangeForm(user=request.user)
+    if request.method == "POST":
+        form = PasswordChangeForm(request.user, data=request.POST)
+        if form.is_valid():
+            form.save()
+            update_session_auth_hash(request, form.user)
+            return redirect('accounts-password')
+
+    context = {
+       'form' : form
     }
 
     return render(request, template, context)
