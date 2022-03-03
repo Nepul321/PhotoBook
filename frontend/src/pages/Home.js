@@ -1,8 +1,8 @@
-import PostCreate from "../components/PostCreate"
+import PostFeed from "../components/PostFeed"
 
 function Home() {
     return (
-        <PostCreate />
+        <PostFeed />
     )
 }
 

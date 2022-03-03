@@ -1,8 +1,6 @@
-import PostFeed from './PostFeed'
-
 function PostCreate() {
     return (
-     <PostFeed />
+     <h1>Create a new post</h1>
     )
 }
 
