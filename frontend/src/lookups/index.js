@@ -1,6 +1,7 @@
-import { getCookie, backend} from "./lookups";
+import { getCookie, backend, LikeUnlike} from "./lookups";
 
 export {
     getCookie,
-    backend
+    backend,
+    LikeUnlike
 }

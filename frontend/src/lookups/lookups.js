@@ -13,4 +13,34 @@ export function getCookie(name) {
     return cookieValue;
 }
 
+function lookup(method, endpoint, callback, data) {
+  let jsonData;
+  if (data) {
+    jsonData = JSON.stringify(data);
+  }
+  const xhr = new XMLHttpRequest();
+  const url = `http://localhost:8000/api${endpoint}`;
+  xhr.responseType = "json";
+  const csrftoken = getCookie("csrftoken");
+  xhr.open(method, url);
+  xhr.setRequestHeader("Content-Type", "application/json");
+
+  if (csrftoken) {
+    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+  }
+
+  xhr.onload = function () {
+    callback(xhr.response, xhr.status);
+  };
+  xhr.onerror = function (e) {
+    console.log(e);
+    callback({ message: "The request was an error" }, 400);
+  };
+  xhr.send(jsonData);
+}
+
+export function LikeUnlike(id, action, callback) {
+   lookup("POST", `/posts/action/`, callback, {id : id, action : action})
+}
+
 export const backend = 'http://localhost:8000/api'
