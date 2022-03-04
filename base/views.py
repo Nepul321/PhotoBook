@@ -1,5 +1,8 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from .forms import (
+    PostForm
+)
 
 def HomeView(request, *args, **kwargs):
     template = "base/home.html"
@@ -21,8 +24,9 @@ def FeedView(request, *args, **kwargs):
 @login_required
 def PostCreateView(request, *args, **kwargs):
     template = "posts/create.html"
+    form = PostForm()
     context = {
-
+      'form' : form
     }
 
     return render(request, template, context)

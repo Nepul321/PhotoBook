@@ -15,6 +15,7 @@ from .serializers import (
 )
 
 from .models import Post
+from base.models import User
 
 
 @api_view(['GET'])
