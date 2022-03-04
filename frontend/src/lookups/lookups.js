@@ -1,16 +1,16 @@
 export function getCookie(name) {
-    var cookieValue = null;
-    if (document.cookie && document.cookie !== "") {
-      var cookies = document.cookie.split(";");
-      for (var i = 0; i < cookies.length; i++) {
-        var cookie = cookies[i].trim();
-        if (cookie.substring(0, name.length + 1) === name + "=") {
-          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-          break;
-        }
+  var cookieValue = null;
+  if (document.cookie && document.cookie !== "") {
+    var cookies = document.cookie.split(";");
+    for (var i = 0; i < cookies.length; i++) {
+      var cookie = cookies[i].trim();
+      if (cookie.substring(0, name.length + 1) === name + "=") {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
       }
     }
-    return cookieValue;
+  }
+  return cookieValue;
 }
 
 function lookup(method, endpoint, callback, data) {
@@ -40,7 +40,7 @@ function lookup(method, endpoint, callback, data) {
 }
 
 export function LikeUnlike(id, action, callback) {
-   lookup("POST", `/posts/action/`, callback, {id : id, action : action})
+  lookup("POST", `/posts/action/`, callback, { id: id, action: action });
 }
 
-export const backend = 'http://localhost:8000/api'
+export const backend = "http://localhost:8000/api";
