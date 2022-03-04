@@ -10,7 +10,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', HomeView, name="home"),
-    path('api/', include('base.urls')),
+    path('', include('base.urls')),
     path('accounts/', include('accounts.urls')),
     path('', include('django.contrib.auth.urls')),
     path('api/posts/', include('posts.urls')),
