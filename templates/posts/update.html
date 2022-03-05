@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+PhotoBook - Update your post
+{% endblock title %}
+
+{% block content %}
+<div id="root"></div>
+<div class="container-fluid my-5" id="container" data-id="{{ obj.id }}">
+<h1>Update Post</h1>
+<form id="form">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-primary">Submit</button>
+</form>
+<div class="back my-3">
+    <a href="{% url 'post-detail' obj.id %}" class="btn btn-outline-primary">Back to post</a>
+</div>
+</div>
+{% endblock content %}
+
+{% block js %}
+<script src="{% static '/js/posts/update.js' %}"></script>
+{% endblock js %}

@@ -4,6 +4,18 @@ import {backend} from '../lookups'
 import Like from '../components/Like'
 import UnLike from '../components/Unlike'
 
+function Actions(props) {
+    const {post} = props
+    return (
+          <div className='actions my-3'>
+                <div className='btn-group'>
+                    <a href={`/posts/${post.id}/update/`} className="btn btn-secondary">Update</a>
+                    <button className='btn btn-danger'>Delete</button>
+                </div>
+            </div>
+    )
+}
+
 function PostDetail() {
     const [post, setPost] = useState({});
     const {id} = useParams();
@@ -40,6 +52,7 @@ function PostDetail() {
                 <Like post={post}/>
                 <UnLike post={post} />
             </div>
+            {post.is_owner === true ? <Actions post={post}/> : null}
             <div className='back my-3'>
             <a href='/feed/' className='btn btn-outline-primary'>Back</a>
             </div>

@@ -1,7 +1,8 @@
 from base.views import (
     FeedView, 
     PostCreateView,
-    PostDetailView
+    PostDetailView,
+    PostUpdateView
 )
 from .api.views import (
     APIBaseView
@@ -14,4 +15,5 @@ urlpatterns = [
     path('feed/', FeedView, name="user-feed"),
     path('create/', PostCreateView, name="post-create"),
     path('posts/<int:id>/', PostDetailView, name="post-detail"),
+    path('posts/<int:id>/update/', PostUpdateView, name="post-update"),
 ]

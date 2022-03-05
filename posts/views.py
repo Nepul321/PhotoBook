@@ -63,7 +63,7 @@ def PostCreateView(request, *args, **kwargs):
         image = post_data['image']
     except:
         pass
-    if not image:
+    if not image or image == "":
         return Response({"detail" : "No image"}, status=401)
     serializer = PostSerializer(data=post_data, context=context)
     if serializer.is_valid(raise_exception=True):
@@ -151,6 +151,9 @@ def PostUpdateView(request, id, *args, **kwargs):
 
     obj = qs.first()
     data = request.data
+    image = data['image']
+    if image == "":
+        return Response({"detail" : "No image given"}, status=401)
     if obj.user == request.user:
         serializer = PostSerializer(instance=obj, data=data, context=context)
         if serializer.is_valid(raise_exception=True):
