@@ -11,6 +11,8 @@ function Like(props) {
       } else if(status === 403) {
         alert("Login")
         window.location.href = "/accounts/login/?next=/"
+      } else if(status === 404) {
+        alert("Post not found")
       } else if (status === 500) {
         alert("Please try again")
       }

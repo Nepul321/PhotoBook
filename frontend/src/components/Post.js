@@ -3,6 +3,7 @@ import UnLike from "./Unlike";
 
 function Post(props) {
   const { post } = props;
+  const post_detail_url = `/posts/${post.id}/`
   return (
     <div className="card mb-3">
       <div className="row g-0">
@@ -21,7 +22,7 @@ function Post(props) {
             <UnLike post={post} />    
             </div>
             <div className="link my-4">
-            <a href="" className="btn btn-outline-primary">
+            <a href={post_detail_url} className="btn btn-outline-primary">
               View post
             </a>
             </div>

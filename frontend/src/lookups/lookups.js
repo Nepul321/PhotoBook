@@ -13,13 +13,15 @@ export function getCookie(name) {
   return cookieValue;
 }
 
+export const backend = "http://localhost:8000/api";
+
 function lookup(method, endpoint, callback, data) {
   let jsonData;
   if (data) {
     jsonData = JSON.stringify(data);
   }
   const xhr = new XMLHttpRequest();
-  const url = `http://localhost:8000/api${endpoint}`;
+  const url = `${backend}${endpoint}`;
   xhr.responseType = "json";
   const csrftoken = getCookie("csrftoken");
   xhr.open(method, url);
@@ -42,5 +44,3 @@ function lookup(method, endpoint, callback, data) {
 export function LikeUnlike(id, action, callback) {
   lookup("POST", `/posts/action/`, callback, { id: id, action: action });
 }
-
-export const backend = "http://localhost:8000/api";

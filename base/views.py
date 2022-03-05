@@ -30,3 +30,11 @@ def PostCreateView(request, *args, **kwargs):
     }
 
     return render(request, template, context)
+
+def PostDetailView(request, *args, **kwargs):
+    template = "posts/details.html"
+    context = {
+
+    }
+
+    return render(request, template, context)
