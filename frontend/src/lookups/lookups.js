@@ -44,3 +44,7 @@ function lookup(method, endpoint, callback, data) {
 export function LikeUnlike(id, action, callback) {
   lookup("POST", `/posts/action/`, callback, { id: id, action: action });
 }
+
+export function DeletePost(id, callback) {
+  lookup("DELETE", `/posts/${id}/delete/`, callback);
+}

@@ -1,3 +1,4 @@
+from os import stat
 from rest_framework.response import Response
 from rest_framework.decorators import (
     api_view, 
@@ -139,7 +140,7 @@ def PostDeleteView(request, id, *args, **kwargs):
         obj.delete()
         return Response({"detail" : "Post deleted"}, status=200)
 
-    return Response({"detail" : "You can't delete this post"})
+    return Response({"detail" : "You can't delete this post", "error" : 1}, status=403)
     
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
