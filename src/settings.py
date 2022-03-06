@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'storages',
     'rest_framework',
     'corsheaders',
     'django_filters',
@@ -130,7 +131,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
-MEDIA_URL = 'media/'
 
 if DEBUG:
     STATICFILES_DIRS = [
@@ -138,7 +138,22 @@ if DEBUG:
     ]
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-MEDIA_ROOT = BASE_DIR / 'media'
+
+LINODE_BUCKET_NAME=os.environ.get('LINODE_BUCKET_NAME')
+LINODE_BUCKET_REGION=os.environ.get('LINODE_BUCKET_REGION')
+LINODE_BUCKET_ACCESS_KEY=os.environ.get('LINODE_BUCKET_ACCESS_KEY') 
+LINODE_BUCKET_SECRET_KEY=os.environ.get('LINODE_BUCKET_SECRET_KEY')
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+AWS_S3_ENDPOINT_URL=f'https://{LINODE_BUCKET_REGION}.linodeobjects.com'
+AWS_ACCESS_KEY_ID=LINODE_BUCKET_ACCESS_KEY
+AWS_SECRET_ACCESS_KEY=LINODE_BUCKET_SECRET_KEY
+AWS_S3_REGION_NAME=LINODE_BUCKET_REGION
+AWS_S3_USE_SSL=True
+AWS_STORAGE_BUCKET_NAME=LINODE_BUCKET_NAME
+
 
 
 AUTH_USER_MODEL = 'base.User'
