@@ -4,6 +4,7 @@ import { backend } from "../lookups";
 import Like from "../components/Like";
 import UnLike from "../components/Unlike";
 import { DeletePost } from "../lookups";
+import ReactMarkdown from "react-markdown";
 
 function Actions(props) {
   const { post } = props;
@@ -108,7 +109,7 @@ function PostDetail() {
     <div className="container my-4">
       <img src={post.image} style={{ height: "auto", width: "100%" }} alt="" />
       <hr />
-      <p>{post.caption}</p>
+      <ReactMarkdown>{post.caption}</ReactMarkdown>
       <div className="btn-group">
         <Like post={post} />
         <UnLike post={post} />

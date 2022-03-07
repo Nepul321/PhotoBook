@@ -1,5 +1,6 @@
 import Like from "./Like";
 import UnLike from "./Unlike";
+import ReactMarkdown from 'react-markdown'
 
 function Post(props) {
   const { post } = props;
@@ -13,7 +14,7 @@ function Post(props) {
         <div className="col-md-8">
           <div className="card-body">
             <h5 className="card-text">@{post.user.username}</h5>
-            <p className="card-text">{post.caption}</p>
+            <ReactMarkdown>{post.caption}</ReactMarkdown>
             <p className="card-text my-3">
               <small className="text-muted">{post.date}</small>
             </p>
