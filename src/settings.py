@@ -26,9 +26,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG_STATUS = os.environ.get("DEBUG_STATUS")
+
+DEBUG_OPTIONS = [True, False]
+
+DEBUG = DEBUG_OPTIONS[int(DEBUG_STATUS)]
 
 ALLOWED_HOSTS = []
+
+if DEBUG:
+    ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 LOGIN_URL = 'accounts-login'
 LOGIN_REDIRECT_URL = 'home'
