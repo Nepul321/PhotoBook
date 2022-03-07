@@ -15,6 +15,9 @@ PhotoBook - Update your post
     {{ form.as_p }}
     <button class="btn btn-primary">Submit</button>
 </form>
+<div class="info my-3">
+    <p class="text-danger">**<b> You can use markdown in the caption</b></p>
+</div>
 <div class="back my-3">
     <a href="{% url 'post-detail' obj.id %}" class="btn btn-outline-primary">Back to post</a>
 </div>

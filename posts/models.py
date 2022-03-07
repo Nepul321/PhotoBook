@@ -26,7 +26,7 @@ class PostManager(models.Manager):
         return self.get_queryset().globalposts()
 
 class Post(models.Model):
-    image = models.ImageField(upload_to="posted_images/", blank=True, null=True)
+    image = models.ImageField(upload_to="posted_images/%Y/%m/%d/%H/%M", blank=True, null=True)
     caption = models.TextField(blank=True)
     is_private = models.BooleanField(default=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
