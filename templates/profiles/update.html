@@ -1,0 +1,19 @@
+{% extends 'base.html' %} 
+
+{% block title %} Update Your Profile {% endblock title %} 
+
+{% block content %}
+<div id="root"></div>
+<div class="container-fluid my-5">
+  <h1>Your Profile</h1>
+  <form action="" method="POST">
+    {% csrf_token %} {{ form.as_p }}
+    <button class="btn btn-primary">Submit</button>
+  </form>
+  <a
+    href="{% url 'profile' obj.user.username %}"
+    class="btn btn-outline-primary my-3"
+    >View profile &RightArrow;</a
+  >
+</div>
+{% endblock content %}

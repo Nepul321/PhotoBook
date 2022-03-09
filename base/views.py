@@ -1,10 +1,12 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .forms import (
-    PostForm
+    PostForm,
+    ProfileForm
 )
 
 from posts.models import Post
+from profiles.models import Profile
 
 def HomeView(request, *args, **kwargs):
     template = "base/home.html"
@@ -63,6 +65,26 @@ def ProfileView(request, *args, **kwargs):
     template = "profiles/profile.html"
     context = {
 
+    }
+
+    return render(request, template, context)
+
+@login_required
+def UpdateProfileView(request, *args, **kwargs):
+    template = "profiles/update.html"
+    user = request.user
+    qs = Profile.objects.filter(user=user)
+    obj = qs.first()
+    form = ProfileForm(instance=obj)
+    if request.method == "POST":
+        form = ProfileForm(request.POST, instance=obj)
+        if form.is_valid():
+            form.save()
+            return redirect('profile-update')
+
+    context = {
+      'form' : form,
+      'obj' : obj
     }
 
     return render(request, template, context)
