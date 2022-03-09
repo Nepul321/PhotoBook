@@ -13,7 +13,7 @@ function Post(props) {
         </div>
         <div className="col-md-8">
           <div className="card-body">
-            <h5 className="card-text">@{post.user.username}</h5>
+            <h5 className="card-text"><a href={`/u/${post.user.username}`}>@{post.user.username}</a></h5>
             <ReactMarkdown>{post.caption}</ReactMarkdown>
             <p className="card-text my-3">
               <small className="text-muted">{post.date}</small>
