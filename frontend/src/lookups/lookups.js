@@ -48,3 +48,7 @@ export function LikeUnlike(id, action, callback) {
 export function DeletePost(id, callback) {
   lookup("DELETE", `/posts/${id}/delete/`, callback);
 }
+
+export function FollowUnFollow(username, action, callback) {
+  lookup("POST", `/profiles/${username}/`, callback, {action : action});
+}

@@ -58,3 +58,11 @@ def PostDetailView(request, *args, **kwargs):
     }
 
     return render(request, template, context)
+
+def ProfileView(request, *args, **kwargs):
+    template = "profiles/profile.html"
+    context = {
+
+    }
+
+    return render(request, template, context)

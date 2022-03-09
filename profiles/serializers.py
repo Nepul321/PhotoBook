@@ -8,6 +8,7 @@ class ProfileSerializer(serializers.ModelSerializer):
     followers = serializers.SerializerMethodField(read_only=True)
     following = serializers.SerializerMethodField(read_only=True)
     is_following = serializers.SerializerMethodField(read_only=True)
+    profile_pic = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Profile
@@ -29,3 +30,9 @@ class ProfileSerializer(serializers.ModelSerializer):
             is_following = user in obj.followers.all()
 
         return is_following
+
+    def get_profile_pic(self, obj):
+        image_url = "https://www.w3schools.com/howto/img_avatar.png"
+        if obj.profile_pic:
+            image_url = obj.profile_pic.url
+        return image_url
