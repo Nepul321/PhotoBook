@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+PhotoBook - Password
+{% endblock title %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="card">
+        <div class="card-body">
+            <h2>Are you sure you want to delete your account ?</h2>
+            <p>This action is irreversible.</p>
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <div class="btn-group">
+                    <a href="{% url 'accounts-account' %}" class="btn btn-primary">Back</a>
+                    <button class="btn btn-danger">Delete</button>
+                </div>
+                </form>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

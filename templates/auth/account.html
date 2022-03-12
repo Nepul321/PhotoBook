@@ -14,5 +14,14 @@ PhotoBook - Account
     </form>
     <p class="my-3 text-danger">NOTE : Changing your email can have bad consequences.</p>
 </div>
+<div class="container my-3">
+    <div class="card">
+        <div class="card-body">
+            <h3>Delete your account</h3>
+            <p>Not satisfied ? Delete your account</p>
+            <a href="{% url 'accounts-delete' %}" class="btn btn-danger">Delete</a>
+        </div>
+    </div>
+</div>
 
 {% endblock content %}

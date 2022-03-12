@@ -19,6 +19,7 @@ from .forms import (
     UserAccountForm
 )
 
+from base.models import User
 
 @unauthenticated_only
 def LoginView(request, *args, **kwargs):
@@ -71,6 +72,23 @@ def PasswordChangeView(request, *args, **kwargs):
 
     context = {
        'form' : form
+    }
+
+    return render(request, template, context)
+
+@login_required
+def DeleteAccountView(request, *args, **kwargs):
+    template = "auth/delete.html"
+    if request.method == "POST":
+        user = request.user
+        qs = User.objects.filter(id=user.id)
+        if not qs:
+            return redirect('accounts-account')
+        obj = qs.first()
+        obj.delete()
+        return redirect('/')
+    context = {
+
     }
 
     return render(request, template, context)
