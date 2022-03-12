@@ -12,6 +12,10 @@ PhotoBook - Login
         {{ form.as_p }}
         <button class="btn btn-primary">Login</button>
     </form>
+    <div class="my-3">
+        <p>Forgot you password ? <a href="{% url 'password_reset' %}">Reset</a></p>
+        <p>Don't have an account ? <a href="">Signup</a></p>
+    </div>
 </div>
 {% endblock content %}
 
