@@ -35,6 +35,14 @@ def LoginView(request, *args, **kwargs):
 
     return render(request, template, context)
 
+@unauthenticated_only
+def SignUpView(request, *args, **kwargs):
+    template = "auth/signup.html"
+    context = {
+
+    }
+
+    return render(request, template, context)
 
 @login_required
 def LogoutView(request, *args, **kwargs):
