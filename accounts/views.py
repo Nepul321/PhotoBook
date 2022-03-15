@@ -16,7 +16,8 @@ from django.contrib.auth import (
 )
 
 from .forms import (
-    UserAccountForm
+    UserAccountForm,
+    SignUpForm
 )
 
 from base.models import User
@@ -38,8 +39,14 @@ def LoginView(request, *args, **kwargs):
 @unauthenticated_only
 def SignUpView(request, *args, **kwargs):
     template = "auth/signup.html"
+    form = SignUpForm()
+    if request.method == "POST":
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('accounts-login')
     context = {
-
+       'form' : form
     }
 
     return render(request, template, context)
