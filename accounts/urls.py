@@ -5,7 +5,8 @@ from .views import (
     AccountView,
     PasswordChangeView,
     DeleteAccountView,
-    SignUpView
+    SignUpView,
+    AccountVerifyView
 )
 
 urlpatterns = [
@@ -14,5 +15,7 @@ urlpatterns = [
     path('account/', AccountView, name="accounts-account"),
     path('password/', PasswordChangeView, name="accounts-password"),
     path('delete/', DeleteAccountView, name="accounts-delete"),
-    path('signup/', SignUpView, name="accounts-signup")
+    path('signup/', SignUpView, name="accounts-signup"),
+    path('users/<str:id>/activate/', AccountVerifyView, name="accounts-verify-account"),
+
 ]

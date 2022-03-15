@@ -20,7 +20,16 @@ from .forms import (
     SignUpForm
 )
 
+from .models import UserKey
 from base.models import User
+from src.settings import DEBUG
+from src.settings import EMAIL_HOST_USER
+from django.core.mail import send_mail
+
+if DEBUG:
+    current_host = "http://localhost:8000"
+else:
+    current_host = ""
 
 @unauthenticated_only
 def LoginView(request, *args, **kwargs):
@@ -44,12 +53,22 @@ def SignUpView(request, *args, **kwargs):
         form = SignUpForm(request.POST)
         if form.is_valid():
             form.save()
-            # email = request.POST['email']
-            # qs = User.objects.filter(email=email)
-            # if not qs:
-            #     return redirect('accounts-signup')
-            # obj = qs.first()
-            return redirect('accounts-signup')
+            email = request.POST['email']
+            qs = UserKey.objects.filter(user__email=email)
+            obj = qs.first()
+            subject = "Verify your email"
+            message = f"Thanks for signing up. \n Verify your email - {current_host}/accounts/users/{obj.key}/activate/"
+            email_from = EMAIL_HOST_USER
+            recipient_list = [obj.user.email, ]
+            send_mail(subject, message, email_from, recipient_list)
+            template = "auth/email_sent.html"
+            context = {
+                "email" : email
+            }
+
+            return render(request, template, context)
+
+
 
     context = {
        'form' : form
@@ -113,3 +132,30 @@ def DeleteAccountView(request, *args, **kwargs):
     }
 
     return render(request, template, context)
+
+@unauthenticated_only
+def AccountVerifyView(request, id, *args, **kwargs):
+    template = "auth/email_verify.html"
+    context = {
+
+    }
+    qs = UserKey.objects.filter(key=id)
+    if not qs:
+        return redirect('/')
+
+    obj = qs.first()
+    if obj.activated == False:
+        obj.activated = True
+        user = obj.user
+        user.is_active = True
+
+        obj.save()
+        user.save()
+
+        context = {
+             "email" : user.email
+        }
+
+        return render(request, template, context)
+
+    return redirect('/')

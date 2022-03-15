@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}
+PhotoBook - Verification email sent
+{% endblock title %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="card">
+        <div class="card-body">
+            <h3>Verification email sent</h3>
+            <p>Verification email sent to {{ email }}. Verifying your email will activate your account</p>
+        </div>
+    </div>
+</div>
+{% endblock content %}
