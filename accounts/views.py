@@ -44,7 +44,13 @@ def SignUpView(request, *args, **kwargs):
         form = SignUpForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('accounts-login')
+            # email = request.POST['email']
+            # qs = User.objects.filter(email=email)
+            # if not qs:
+            #     return redirect('accounts-signup')
+            # obj = qs.first()
+            return redirect('accounts-signup')
+
     context = {
        'form' : form
     }
