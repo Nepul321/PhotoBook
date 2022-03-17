@@ -1,4 +1,3 @@
-from os import stat
 from rest_framework.response import Response
 from rest_framework.decorators import (
     api_view, 
@@ -15,6 +14,8 @@ from .serializers import (
     PostActionSerializer
 )
 
+from django.db.models import Q
+
 from .models import Post
 
 
@@ -24,6 +25,27 @@ def PostGlobalView(request, *args, **kwargs):
     qs = Post.objects.get_global_posts()
     serializer = PostSerializer(qs, many=True, context=context)
     data = serializer.data
+    return Response(data, status=200)
+
+@api_view(['GET'])
+def PostSearchView(request, *args, **kwargs):
+    context = {"request" : request}
+    query = request.GET.get("q")
+    if not query:
+        return Response({"detail" : "Nothing searched"}, status=401)
+
+    objects = Post.objects.filter(is_private=False)
+    
+    qs = objects.filter(
+        Q(caption__contains=query) |
+        Q(user__username__contains=query)
+
+    )
+
+    serializer = PostSerializer(qs, many=True, context=context)
+
+    data = serializer.data
+
     return Response(data, status=200)
 
 @api_view(["GET"])

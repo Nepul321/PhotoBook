@@ -38,7 +38,7 @@ if DEBUG:
     ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 LOGIN_URL = 'accounts-login'
-LOGIN_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = 'user-feed'
 LOGOUT_REDIRECT_URL = 'accounts-login'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
