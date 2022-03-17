@@ -90,9 +90,9 @@ function PostDetail() {
           return res.json();
         } else if (res.status === 403) {
           alert("You don't have access to view this post");
-          window.location.href = "/feed/";
+          window.location.href = "/";
         } else if (res.status === 404) {
-          window.location.href = "/feed/";
+          window.location.href = "/";
         } else if (res.status === 500) {
           alert("An error occurred. Please try again.");
         }
