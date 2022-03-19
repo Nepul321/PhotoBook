@@ -52,10 +52,16 @@ def ProfileDetailView(request, username, *args, **kwargs):
 @api_view(["GET"])
 def UserPostsView(request, username, *args, **kwargs):
     context = {"request" : request}
+    objects = []
     qs = Post.objects.filter(user__username__iexact=username)
     if not qs:
         return Response({"detail" : "User not found"}, status=404)
-    serializer = PostSerializer(qs, many=True, context=context)
+    for object in qs:
+        if object.user == request.user:
+            objects.append(object)
+        elif object.is_private == False:
+            objects.append(object)
+    serializer = PostSerializer(objects, many=True, context=context)
     data = serializer.data
     return Response(data, status=200)
 
