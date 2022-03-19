@@ -8,6 +8,9 @@ from .serializers import (
     ProfileSerializer
 )
 
+from posts.models import Post
+from posts.serializers import PostSerializer
+
 @api_view(['GET'])
 def ProfileListView(request, *args, **kwargs):
     context = {"request" : request}
@@ -45,3 +48,14 @@ def ProfileDetailView(request, username, *args, **kwargs):
                 pass        
     data = serializer.data
     return Response(data, status=200)
+
+@api_view(["GET"])
+def UserPostsView(request, username, *args, **kwargs):
+    context = {"request" : request}
+    qs = Post.objects.filter(user__username__iexact=username)
+    if not qs:
+        return Response({"detail" : "User not found"}, status=404)
+    serializer = PostSerializer(qs, many=True, context=context)
+    data = serializer.data
+    return Response(data, status=200)
+
