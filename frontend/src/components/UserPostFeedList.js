@@ -21,7 +21,7 @@ function UserPostFeedList() {
         <p>Loading...</p>
       ) : (
         posts.map((item, key) => {
-          return <Post post={item} key={key} />;
+          return <Post post={item} key={key} showLikeButtons={true}/>;
         })
       )}
     </div>

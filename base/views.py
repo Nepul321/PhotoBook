@@ -88,3 +88,11 @@ def UpdateProfileView(request, *args, **kwargs):
     }
 
     return render(request, template, context)
+
+def SearchView(request, *args, **kwargs):
+    template = "posts/search.html"
+    context = {
+
+    }
+
+    return render(request, template, context)

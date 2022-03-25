@@ -20,7 +20,7 @@ function PostFeed() {
             {posts === [] ? <p>Loading...</p> :
                 posts.map((item, key) => {
                     return (
-                       <Post post={item} key={key}/>
+                       <Post post={item} key={key} showLikeButtons={true}/>
                     )
                 })
             }

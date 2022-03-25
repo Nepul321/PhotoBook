@@ -32,9 +32,14 @@ def PostSearchView(request, *args, **kwargs):
     context = {"request" : request}
     query = request.GET.get("q")
     if not query:
-        return Response({"detail" : "Nothing searched"}, status=401)
+        return Response([], status=200)
 
-    objects = Post.objects.filter(is_private=False)
+    objects = Post.objects.filter(
+        Q(user__username__iexact=request.user.username) |
+        Q(is_private=False)
+    )
+
+
     
     qs = objects.filter(
         Q(caption__contains=query) |

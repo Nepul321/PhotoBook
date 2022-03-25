@@ -3,6 +3,7 @@ import Home from './pages/Home';
 import UserPostFeed from './pages/UserPostFeed'
 import PostDetail from './pages/PostDetail';
 import Profile from './pages/Profile';
+import Search from './pages/Search';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Route path="/feed" exact element={<UserPostFeed />}></Route>
         <Route path="/posts/:id" exact element={<PostDetail />}></Route>
         <Route path="/u/:username" exact element={<Profile />}></Route>
+        <Route path="/search" exact element={<Search />}></Route>
       </Routes>
     </div>
   );

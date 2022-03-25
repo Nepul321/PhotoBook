@@ -2,8 +2,19 @@ import Like from "./Like";
 import UnLike from "./Unlike";
 import ReactMarkdown from 'react-markdown'
 
+function LikeUnlike(props) {
+  const {post} = props;
+  return (
+    <div className="btn-group">
+    <Like post={post}/>
+    <UnLike post={post} />    
+    </div>
+  )
+}
+
 function Post(props) {
   const { post } = props;
+  const { showLikeButtons } = props;
   const post_detail_url = `/posts/${post.id}/`
   return (
     <div className="card mb-3">
@@ -18,10 +29,9 @@ function Post(props) {
             <p className="card-text my-3">
               <small className="text-muted">{post.date}</small>
             </p>
-            <div className="btn-group">
-            <Like post={post}/>
-            <UnLike post={post} />    
-            </div>
+            {showLikeButtons === true ? (
+             <LikeUnlike post={post}/>
+            ) : null}
             <div className="link my-4">
             <a href={post_detail_url} className="btn btn-outline-primary">
               View post

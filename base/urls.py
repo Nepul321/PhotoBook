@@ -4,7 +4,8 @@ from base.views import (
     PostDetailView,
     PostUpdateView,
     ProfileView,
-    UpdateProfileView
+    UpdateProfileView,
+    SearchView
 )
 from .api.views import (
     APIBaseView
@@ -20,4 +21,5 @@ urlpatterns = [
     path('posts/<int:id>/update/', PostUpdateView, name="post-update"),
     path('u/<str:username>/', ProfileView, name="profile"),
     path('profile/', UpdateProfileView, name="profile-update"),
+    path('search/', SearchView, name="search"),
 ]
