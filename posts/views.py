@@ -45,7 +45,7 @@ def PostSearchView(request, *args, **kwargs):
         Q(caption__contains=query) |
         Q(user__username__contains=query)
 
-    )
+    ).order_by('-datetime')
 
     serializer = PostSerializer(qs, many=True, context=context)
 
