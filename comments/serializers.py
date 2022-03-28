@@ -12,7 +12,7 @@ class ChildCommentSeriailzer(serializers.ModelSerializer):
         fields = ('id', 'user', 'content', 'date')
 
 
-class CommentListSerializer(serializers.ModelSerializer):
+class CommentSerializer(serializers.ModelSerializer):
     user = UserPublicSerializer(read_only=True)
     post = PostSerializer(read_only=True)
     children = serializers.SerializerMethodField(read_only=True)
@@ -26,4 +26,4 @@ class CommentListSerializer(serializers.ModelSerializer):
         serializer = ChildCommentSeriailzer(
             qs, many=True, context={"request": self.context['request']})
         return serializer.data
-        
+
