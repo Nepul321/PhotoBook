@@ -15,4 +15,17 @@ class Comment(models.Model):
     class Meta:
         ordering = ['-datetime']
 
+    @property
+    def is_child(self):
+        if self.parent is not None:
+            return True
+        else:
+            return False
+
+    def get_children(self):
+        if self.is_child:
+            return None
+        else:
+            return Comment.objects.filter(parent=self)
+
     
