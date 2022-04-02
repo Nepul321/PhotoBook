@@ -16,7 +16,7 @@ def CommentListView(request, *args, **kwargs):
     return Response(data, status=200)
 
 
-@api_view(["GET", "DELETE"])
+@api_view(["GET", "DELETE", "POST"])
 def CommentDetailView(request, id, *args, **kwargs):
     context = {"request" : request}
     qs = Comment.objects.filter(id=id)
@@ -31,6 +31,12 @@ def CommentDetailView(request, id, *args, **kwargs):
                 return Response({"detail" : "Comment deleted"}, status=200)
             return Response({"detail" : "You can't delete this comment"}, status=403)
         return Response({"detail" : "You can't delete this comment"}, status=403)
+    if request.method == "POST":
+        data = request.data
+        serializer = CommentSerializer(instance=obj, data=data, context=context)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=200)
     serializer = CommentSerializer(obj, context=context)
     data = serializer.data
     return Response(data, status=200)
