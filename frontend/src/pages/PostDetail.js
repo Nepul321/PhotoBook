@@ -5,6 +5,7 @@ import Like from "../components/Like";
 import UnLike from "../components/Unlike";
 import { DeletePost } from "../lookups";
 import ReactMarkdown from "react-markdown";
+import CommentSection from "../components/CommentSection";
 
 function Actions(props) {
   const { post } = props;
@@ -120,6 +121,8 @@ function PostDetail() {
           Back
         </a>
       </div>
+      <hr />
+      <CommentSection />
     </div>
   );
 }
