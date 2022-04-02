@@ -16,13 +16,21 @@ def CommentListView(request, *args, **kwargs):
     return Response(data, status=200)
 
 
-@api_view(["GET"])
+@api_view(["GET", "DELETE"])
 def CommentDetailView(request, id, *args, **kwargs):
     context = {"request" : request}
     qs = Comment.objects.filter(id=id)
     if not qs:
         return Response({"detail" : "Comment not found"}, status=404)
     obj = qs.first()
+    user = request.user
+    if request.method == "DELETE":
+        if user.is_authenticated:
+            if user == obj.user:
+                obj.delete()
+                return Response({"detail" : "Comment deleted"}, status=200)
+            return Response({"detail" : "You can't delete this comment"}, status=403)
+        return Response({"detail" : "You can't delete this comment"}, status=403)
     serializer = CommentSerializer(obj, context=context)
     data = serializer.data
     return Response(data, status=200)
