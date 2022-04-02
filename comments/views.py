@@ -32,11 +32,16 @@ def CommentDetailView(request, id, *args, **kwargs):
             return Response({"detail" : "You can't delete this comment"}, status=403)
         return Response({"detail" : "You can't delete this comment"}, status=403)
     if request.method == "POST":
-        data = request.data
-        serializer = CommentSerializer(instance=obj, data=data, context=context)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=200)
+        if user.is_authenticated:
+            if user == obj.user:
+                data = request.data
+                serializer = CommentSerializer(instance=obj, data=data, context=context)
+                if serializer.is_valid():
+                    serializer.save()
+                    return Response(serializer.data, status=200)
+            return Response({"detail" : "You can't update this comment"}, status=403)
+        return Response({"detail" : "You can't update this comment"}, status=403)
+            
     serializer = CommentSerializer(obj, context=context)
     data = serializer.data
     return Response(data, status=200)
