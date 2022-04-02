@@ -48,3 +48,32 @@ def PostCommentsView(request, id, *args, **kwargs):
     data = serializer.data
     return Response(data, status=200)
 
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def CommentCreateView(request, post_id, *args, **kwargs):
+    context = {"request" : request}
+    qs = Post.objects.filter(id=post_id)
+    if not qs:
+        return Response({"detail" : "Post not found"}, status=404)
+    obj = qs.first()
+    data = request.data
+    parent = data['parent'] or None
+    if parent:
+        commentQs = Comment.objects.filter(id=parent)
+        if not qs:
+            return Response({"detail" : "Comment not found"}, status=404)
+        commentObj = commentQs.first()
+    else:
+        commentObj = None
+    serializer = CommentSerializer(data=data, context=context)
+    if serializer.is_valid(raise_exception=True):
+        serializer.save(
+            post=obj,
+            user=request.user,
+            parent=commentObj
+        )
+
+        return Response(serializer.data, status=201)
+    
+    return Response({}, status=401)
