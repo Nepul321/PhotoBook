@@ -8,6 +8,8 @@ from .serializers import (
     ProfileSerializer
 )
 
+from base.models import User
+
 from posts.models import Post
 from posts.serializers import PostSerializer
 
@@ -53,9 +55,11 @@ def ProfileDetailView(request, username, *args, **kwargs):
 def UserPostsView(request, username, *args, **kwargs):
     context = {"request" : request}
     objects = []
-    qs = Post.objects.filter(user__username__iexact=username)
-    if not qs:
+    userQs = User.objects.filter(username=username)
+    if not userQs:
         return Response({"detail" : "User not found"}, status=404)
+    obj = userQs.first()
+    qs = Post.objects.filter(user=obj)
     for object in qs:
         if object.user == request.user:
             objects.append(object)

@@ -19,7 +19,7 @@ class CommentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Comment
-        fields = ('id', 'user', 'content', 'date', 'post', 'children')
+        fields = ('id', 'user', 'content', 'date', 'datetime', 'post', 'children')
 
     def get_children(self, obj):
         qs = Comment.objects.filter(parent__pk=obj.pk)
