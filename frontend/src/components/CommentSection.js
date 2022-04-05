@@ -8,7 +8,7 @@ function CommentSection(props) {
     useEffect(() => {
       fetch(`${backend}/comments/posts/${post.id}/`)
       .then(res => {
-          return res.json();
+          return res.json()
       })
 
       .then(data => {

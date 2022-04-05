@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
+import DeleteComment from "./DeleteComment";
 
 function Replies(props) {
   const { replies } = props;
@@ -29,6 +30,7 @@ function Replies(props) {
               {comment.date}
             </p>
             <ReactMarkdown>{comment.content}</ReactMarkdown>
+            {comment.is_user === true ? <DeleteComment comment={comment}/> : null}
           </div>
         );
       })}
@@ -77,6 +79,8 @@ function Comment(props) {
         {comment.date}
       </p>
       <ReactMarkdown>{comment.content}</ReactMarkdown>
+      <div className="btn-group">
+      {comment.is_user === true ? <DeleteComment comment={comment}/> : null}
       {children.length < 1 ? null : (
         <button
           className="btn btn-outline-secondary"
@@ -85,6 +89,7 @@ function Comment(props) {
           {verb} replies ({children.length})
         </button>
       )}
+      </div>
 
       {!showReplies ? null : <Replies replies={children} />}
     </div>
