@@ -1,3 +1,19 @@
-import { getCookie, backend, LikeUnlike, DeletePost, FollowUnFollow, CommentDelete} from "./lookups";
+import {
+  getCookie,
+  backend,
+  LikeUnlike,
+  DeletePost,
+  FollowUnFollow,
+  CommentDelete,
+  CommentCreate
+} from "./lookups";
 
-export { getCookie, backend, LikeUnlike, DeletePost, FollowUnFollow, CommentDelete};
+export {
+  getCookie,
+  backend,
+  LikeUnlike,
+  DeletePost,
+  FollowUnFollow,
+  CommentDelete,
+  CommentCreate
+};

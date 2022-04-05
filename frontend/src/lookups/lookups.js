@@ -56,3 +56,7 @@ export function FollowUnFollow(username, action, callback) {
 export function CommentDelete(id, callback) {
   lookup("DELETE", `/comments/${id}/`, callback)
 }
+
+export function CommentCreate(id, content, parent, callback) {
+  lookup("POST", `/comments/posts/${id}/create/`, callback, {content : content, parent : parent})
+}
