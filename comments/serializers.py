@@ -6,10 +6,18 @@ from posts.serializers import PostSerializer
 
 class ChildCommentSeriailzer(serializers.ModelSerializer):
     user = UserPublicSerializer()
+    is_user = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Comment
-        fields = ('id', 'user', 'content', 'date')
+        fields = ('id', 'user', 'content', 'date', 'datetime', 'is_user')
+
+    def get_is_user(self, obj):
+        request = self.context.get("request")
+        is_user = False
+        if request.user == obj.user:
+            is_user = True
+        return is_user    
 
 
 class CommentSerializer(serializers.ModelSerializer):
