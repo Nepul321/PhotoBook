@@ -31,7 +31,7 @@ class CommentSerializer(serializers.ModelSerializer):
         fields = ('id', 'user', 'content', 'date', 'datetime', 'post', 'children', 'is_user')
 
     def get_children(self, obj):
-        qs = Comment.objects.filter(parent__pk=obj.pk)
+        qs = Comment.objects.filter(parent__pk=obj.pk).order_by("datetime")
         serializer = ChildCommentSeriailzer(
             qs, many=True, context={"request": self.context['request']})
         return serializer.data
