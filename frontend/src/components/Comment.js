@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import DeleteComment from "./DeleteComment";
 import { CommentCreate } from "../lookups";
+import numeral from "numeral";
 
 function Replies(props) {
   const { replies } = props;
@@ -109,7 +110,7 @@ function Comment(props) {
           className="btn btn-outline-secondary"
           onClick={handleShowReplies}
         >
-          {verb} replies ({children.length})
+          {verb} replies ({numeral(children.length).format('0a')})
         </button>
       )}
       </div>

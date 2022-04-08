@@ -4,6 +4,7 @@ import { backend } from "../lookups";
 import Follow from "../components/Follow";
 import Unfollow from "../components/Unfollow";
 import ProfilePost from "../components/ProfilePost";
+import numeral from "numeral";
 
 function ProfilePosts(props) {
   const { posts } = props;
@@ -73,8 +74,8 @@ function Profile() {
                     {profile.user.name}
                     <p className="text-muted">(@{profile.user.username})</p>
                   </h5>
-                  <p>Followers : {profile.followers}</p>
-                  <p>Following : {profile.following}</p>
+                  <p>Followers : {numeral(profile.followers).format("0a")}</p>
+                  <p>Following : {numeral(profile.following).format("0a")}</p>
                   {!profile.is_following ? (
                     <Follow profile={profile} />
                   ) : (

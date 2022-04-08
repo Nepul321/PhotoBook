@@ -1,4 +1,5 @@
 import { LikeUnlike } from "../lookups";
+import numeral from 'numeral'
 
 function Like(props) {
   const { post } = props;
@@ -25,7 +26,7 @@ function Like(props) {
       className="btn btn-primary"
       onClick={() => HandleClick(post.id, "like")}
     >
-      Likes {post.likes}
+      Likes {numeral(post.likes).format("0a")}
     </button>
   );
 }
