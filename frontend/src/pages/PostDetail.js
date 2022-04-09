@@ -83,6 +83,7 @@ function Actions(props) {
 function PostDetail() {
   const [post, setPost] = useState({});
   const [author, setAuthor] = useState("");
+  const [authorUserName, setAuthorUserName] = useState("");
   const { id } = useParams();
 
   useEffect(() => {
@@ -105,6 +106,7 @@ function PostDetail() {
       .then((data) => {
         setPost(data);
         setAuthor(data.user.name)
+        setAuthorUserName(data.user.username)
       });
   });
 
@@ -112,7 +114,7 @@ function PostDetail() {
     <div className="container my-4">
       <img src={post.image} style={{ height: "auto", width: "100%" }} alt="" />
       <hr />
-      <p><i>By {author}</i></p>
+      <p><i>By <a href={`/u/${authorUserName}/`} style={{textDecoration : "none"}}>{author}</a></i></p>
       <ReactMarkdown>{post.caption}</ReactMarkdown>
       <div className="btn-group">
         <Like post={post} />

@@ -3,6 +3,7 @@ import ReactMarkdown from "react-markdown";
 import DeleteComment from "./DeleteComment";
 import { CommentCreate } from "../lookups";
 import numeral from "numeral";
+import ProfileBadge from "./CommentProfileBadge";
 
 function Replies(props) {
   const { replies } = props;
@@ -12,25 +13,7 @@ function Replies(props) {
       {replies.map((comment, key) => {
         return (
           <div className="reply border my-3 p-3" key={key}>
-            <p>
-              <div
-                style={{
-                  width: "40px",
-                  backgroundColor: "gray",
-                  color: "white",
-                  height: "40px",
-                  borderRadius: "50%",
-                  textAlign: "center",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  display: "flex",
-                }}
-              >
-                {comment.user.username[0]}
-              </div>
-              <a href={`/u/${comment.user.username}/`}>{comment.user.name}</a> -
-              {comment.date}
-            </p>
+            <ProfileBadge comment={comment} />
             <ReactMarkdown>{comment.content}</ReactMarkdown>
             {comment.is_user === true ? <DeleteComment comment={comment}/> : null}
           </div>
@@ -83,25 +66,7 @@ function Comment(props) {
   }
   return (
     <div className="comment mb-3 border-bottom p-3">
-      <p>
-        <div
-          style={{
-            width: "40px",
-            backgroundColor: "gray",
-            color: "white",
-            height: "40px",
-            borderRadius: "50%",
-            textAlign: "center",
-            justifyContent: "center",
-            alignItems: "center",
-            display: "flex",
-          }}
-        >
-          {comment.user.username[0]}
-        </div>
-        <a href={`/u/${comment.user.username}/`}>{comment.user.name}</a> -
-        {comment.date}
-      </p>
+      <ProfileBadge comment={comment} />
       <ReactMarkdown>{comment.content}</ReactMarkdown>
       <div className="btn-group">
       {comment.is_user === true ? <DeleteComment comment={comment}/> : null}
