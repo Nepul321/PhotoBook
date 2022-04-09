@@ -18,7 +18,7 @@ function NoProfilePic(props) {
         {comment.user.username[0]}
       </div>
       <a href={`/u/${comment.user.username}/`} >{comment.user.name}</a> -
-      {comment.date}
+      <small className="text-muted"> {comment.date}</small>
     </p>
   );
 }
@@ -34,7 +34,7 @@ function ProfilePic(props) {
           alt=""
         />
         <a href={`/u/${comment.user.username}/`} style={{marginLeft : "10px"}}>{comment.user.name}</a> -
-        {comment.date}
+        <small className="text-muted"> {comment.date}</small>
       </div>
     </p>
   );

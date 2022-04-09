@@ -6,6 +6,7 @@ import UnLike from "../components/Unlike";
 import { DeletePost } from "../lookups";
 import ReactMarkdown from "react-markdown";
 import CommentSection from "../components/CommentSection";
+import PostProfileBadge from "../components/PostProfileBadge";
 
 function Actions(props) {
   const { post } = props;
@@ -82,8 +83,7 @@ function Actions(props) {
 
 function PostDetail() {
   const [post, setPost] = useState({});
-  const [author, setAuthor] = useState("");
-  const [authorUserName, setAuthorUserName] = useState("");
+  const [user, setUser] = useState(null)
   const { id } = useParams();
 
   useEffect(() => {
@@ -105,8 +105,7 @@ function PostDetail() {
 
       .then((data) => {
         setPost(data);
-        setAuthor(data.user.name)
-        setAuthorUserName(data.user.username)
+        setUser(data.user);
       });
   });
 
@@ -114,7 +113,7 @@ function PostDetail() {
     <div className="container my-4">
       <img src={post.image} style={{ height: "auto", width: "100%" }} alt="" />
       <hr />
-      <p><i>By <a href={`/u/${authorUserName}/`} style={{textDecoration : "none"}}>{author}</a></i></p>
+      {user === null ? null : <PostProfileBadge post={post}/>}
       <ReactMarkdown>{post.caption}</ReactMarkdown>
       <div className="btn-group">
         <Like post={post} />

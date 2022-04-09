@@ -1,6 +1,7 @@
 import Like from "./Like";
 import UnLike from "./Unlike";
 import ReactMarkdown from 'react-markdown'
+import PostProfileBadge from "./PostProfileBadge";
 
 function LikeUnlike(props) {
   const {post} = props;
@@ -24,11 +25,8 @@ function Post(props) {
         </div>
         <div className="col-md-8">
           <div className="card-body">
-            <h5 className="card-text"><a href={`/u/${post.user.username}`}>@{post.user.username}</a></h5>
+            <PostProfileBadge post={post}/>
             <ReactMarkdown>{post.caption}</ReactMarkdown>
-            <p className="card-text my-3">
-              <small className="text-muted">{post.date}</small>
-            </p>
             {showLikeButtons === true ? (
              <LikeUnlike post={post}/>
             ) : null}
