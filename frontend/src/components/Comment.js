@@ -15,7 +15,17 @@ function Replies(props) {
           <div className="reply border my-3 p-3" key={key}>
             <ProfileBadge comment={comment} />
             <ReactMarkdown>{comment.content}</ReactMarkdown>
-            {comment.is_user === true ? <DeleteComment comment={comment}/> : null}
+            {comment.is_user === true ? (
+              <DeleteComment comment={comment} />
+            ) : null}
+            {comment.is_user === true ? (
+              <a
+                href={`/comments/${comment.id}/`}
+                className="btn btn-secondary"
+              >
+                Update
+              </a>
+            ) : null}
           </div>
         );
       })}
@@ -69,31 +79,39 @@ function Comment(props) {
       <ProfileBadge comment={comment} />
       <ReactMarkdown>{comment.content}</ReactMarkdown>
       <div className="btn-group">
-      {comment.is_user === true ? <DeleteComment comment={comment}/> : null}
-      {children.length < 1 ? null : (
-        <button
-          className="btn btn-outline-secondary"
-          onClick={handleShowReplies}
-        >
-          {verb} replies ({numeral(children.length).format('0a')})
-        </button>
-      )}
+        {comment.is_user === true ? <DeleteComment comment={comment} /> : null}
+        {comment.is_user === true ? (
+              <a
+                href={`/comments/${comment.id}/`}
+                className="btn btn-secondary"
+              >
+                Update
+              </a>
+            ) : null}
+        {children.length < 1 ? null : (
+          <button
+            className="btn btn-outline-secondary"
+            onClick={handleShowReplies}
+          >
+            {verb} replies ({numeral(children.length).format("0a")})
+          </button>
+        )}
       </div>
 
       <div className="container my-2">
-      <form onSubmit={handleFormSubmit}>
-        <textarea
-          className="form-control"
-          placeholder="Write a reply"
-          ref={content_ref}
-        ></textarea>
+        <form onSubmit={handleFormSubmit}>
+          <textarea
+            className="form-control"
+            placeholder="Write a reply"
+            ref={content_ref}
+          ></textarea>
           <button
             className="btn my-2 text-white"
             style={{ backgroundColor: "#487eb0" }}
           >
             Reply
           </button>
-      </form>
+        </form>
       </div>
 
       {!showReplies ? null : <Replies replies={children} />}

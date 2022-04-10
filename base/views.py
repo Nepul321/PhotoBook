@@ -1,12 +1,16 @@
+from django.urls import reverse
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .forms import (
     PostForm,
-    ProfileForm
+    ProfileForm,
+    CommentForm
 )
 
 from posts.models import Post
 from profiles.models import Profile
+from comments.models import Comment
 
 def HomeView(request, *args, **kwargs):
     template = "base/home.html"
@@ -80,7 +84,7 @@ def UpdateProfileView(request, *args, **kwargs):
         form = ProfileForm(request.POST, instance=obj)
         if form.is_valid():
             form.save()
-            return redirect('profile-update')
+            return HttpResponseRedirect(reverse())
 
     context = {
       'form' : form,
@@ -93,6 +97,28 @@ def SearchView(request, *args, **kwargs):
     template = "posts/search.html"
     context = {
 
+    }
+
+    return render(request, template, context)
+
+@login_required
+def CommentUpdateView(request, id, *args, **kwargs):
+    template = "comments/update.html"
+    qs = Comment.objects.filter(id=id)
+    if not qs:
+        return redirect('user-feed')
+    obj = qs.first()
+    if obj.user != request.user:
+        return redirect('user-feed')
+
+    form = CommentForm(instance=obj)
+    if request.method == "POST":
+        form = CommentForm(request.POST, instance=obj)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('post-detail', args=[str(obj.post.id)]))
+    context = {
+      'form' : form,
     }
 
     return render(request, template, context)

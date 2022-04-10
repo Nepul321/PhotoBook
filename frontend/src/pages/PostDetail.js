@@ -6,7 +6,6 @@ import UnLike from "../components/Unlike";
 import { DeletePost } from "../lookups";
 import ReactMarkdown from "react-markdown";
 import CommentSection from "../components/CommentSection";
-import PostProfileBadge from "../components/PostProfileBadge";
 
 function Actions(props) {
   const { post } = props;
@@ -113,7 +112,7 @@ function PostDetail() {
     <div className="container my-4">
       <img src={post.image} style={{ height: "auto", width: "100%" }} alt="" />
       <hr />
-      {user === null ? null : <PostProfileBadge post={post}/>}
+      {user === null ? null : <p>By <a href={`/u/${user.username}`} style={{textDecoration : "none"}}>{user.name}</a> - {post.date}</p>}
       <ReactMarkdown>{post.caption}</ReactMarkdown>
       <div className="btn-group">
         <Like post={post} />

@@ -5,7 +5,8 @@ from base.views import (
     PostUpdateView,
     ProfileView,
     UpdateProfileView,
-    SearchView
+    SearchView,
+    CommentUpdateView
 )
 from .api.views import (
     APIBaseView
@@ -22,4 +23,5 @@ urlpatterns = [
     path('u/<str:username>/', ProfileView, name="profile"),
     path('profile/', UpdateProfileView, name="profile-update"),
     path('search/', SearchView, name="search"),
+    path('comments/<int:id>/', CommentUpdateView, name="comment-update")
 ]

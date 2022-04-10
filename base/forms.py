@@ -1,6 +1,7 @@
 from profiles.models import Profile
 from django import forms
 from posts.models import Post
+from comments.models import Comment
 
 
 class PostForm(forms.ModelForm):
@@ -20,4 +21,13 @@ class ProfileForm(forms.ModelForm):
         widgets = {
             'bio' : forms.Textarea(attrs={'class' : 'form-control'}),
             'location' : forms.TextInput(attrs={'class' : 'form-control'})
+        }
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ('content', )
+
+        widgets = {
+            'content' : forms.Textarea(attrs={'class' : 'form-control'})
         }
